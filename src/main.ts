@@ -30,6 +30,10 @@ import { RedirectFromLoginFilter } from './session-manager/filters/redirect-to-l
 import { SetupIntendInterceptor } from './session-manager/interceptors/setup-intend/setup-intend.interceptor';
 import { KillForApiInterceptor } from './session-manager/interceptors/kill-for-api/kill-for-api.interceptor';
 import { registerApplicationContext } from './common/application-context';
+import { Sequelize } from 'sequelize';
+import pgvector from 'pgvector/sequelize';
+
+pgvector.registerType(Sequelize);
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {});

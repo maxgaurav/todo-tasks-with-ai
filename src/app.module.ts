@@ -27,6 +27,10 @@ import { PaginateOverwriteModule } from './paginate-overwrite/paginate-overwrite
 import { UrlManagementModule } from './url-management/url-management.module';
 import { ClsModule } from 'nestjs-cls';
 import { Request, Response } from 'express';
+import { TasksModule } from './tasks/tasks.module';
+import { RepositoriesModule } from './repositories/repositories.module';
+import { OllamaModule } from './ollama/ollama.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -63,6 +67,10 @@ import { Request, Response } from 'express';
     UserModule,
     FileManagementModule,
     UrlManagementModule,
+    TasksModule,
+    RepositoriesModule,
+    HttpModule.register({ global: true }),
+    OllamaModule,
   ],
   controllers: [AppController],
   providers: [

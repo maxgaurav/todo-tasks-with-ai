@@ -5,26 +5,25 @@ import { DataType } from 'sequelize-typescript';
 
 module.exports = {
   up: async (queryInterface: QueryInterface, Sequelize: Sequelize) => {
+    await queryInterface.sequelize.query(
+      'create extension if not exists vector',
+    );
+
     /**
      * Add altering commands here.
      *
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-
-    await queryInterface.createTable('oauth_refresh_tokens', {
+    await queryInterface.createTable('task_embeddings', {
       id: {
-        type: DataType.STRING(100),
-        primaryKey: true,
+        type: DataType.BIGINT,
         allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
       },
-      expires_at: {
-        type: DataType.DATE,
-        allowNull: true,
-        defaultValue: null,
-      },
-      access_token_id: {
-        type: DataType.STRING,
+      task_id: {
+        type: DataType.BIGINT,
         allowNull: false,
       },
       created_at: {
@@ -39,18 +38,25 @@ module.exports = {
       },
     });
 
-    await queryInterface.addConstraint('oauth_refresh_tokens', {
+    await queryInterface.addConstraint('task_embeddings', {
       type: 'foreign key',
+      fields: ['task_id'],
       references: {
-        table: 'oauth_access_tokens',
+        table: 'tasks',
         field: 'id',
       },
-      fields: ['access_token_id'],
       onDelete: 'CASCADE',
       onUpdate: 'NO ACTION',
     });
 
-    await queryInterface.addIndex('oauth_refresh_tokens', ['access_token_id']);
+    await queryInterface.addIndex('task_embeddings', ['task_id']);
+    await queryInterface.sequelize.query(
+      'alter table task_embeddings add column if not exists embeddings vector',
+    );
+    // @todo only allows when vector size is upto 2000
+    // await queryInterface.sequelize.query(
+    //   'CREATE INDEX tasks_embeddings_embedding_idx ON task_embeddings USING hnsw (embeddings vector_cosine_ops)',
+    // );
   },
 
   down: async (queryInterface: QueryInterface) => {
@@ -60,6 +66,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('oauth_refresh_tokens');
+
+    await queryInterface.dropTable('task_embeddings');
   },
 };

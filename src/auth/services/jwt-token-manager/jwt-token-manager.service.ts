@@ -11,9 +11,11 @@ export class JwtTokenManagerService implements JwtOptionsFactory {
    * Create jwt root sync settings for JwtModule
    */
   async createJwtOptions(): Promise<JwtModuleOptions> {
+    const privateKey = await this.privateKey();
     return {
+      secret: privateKey,
       publicKey: await this.publicKey(),
-      privateKey: await this.privateKey(),
+      privateKey,
     };
   }
 

@@ -11,6 +11,7 @@ import { GrantTypes } from '../grant-types/grant-type-implementation';
 
 export class AccessTokenDto {
   @ApiProperty({
+    type: String,
     description: `Required with grant_type ${GrantTypes.ImplicitPassword}`,
     required: false,
   })
@@ -20,6 +21,7 @@ export class AccessTokenDto {
   public email: string | null = null;
 
   @ApiProperty({
+    type: String,
     required: false,
     description: `Required with grant_type ${GrantTypes.ImplicitPassword}`,
   })
@@ -29,6 +31,7 @@ export class AccessTokenDto {
   public password: string | null = null;
 
   @ApiProperty({
+    type: String,
     description: `Required with grant_type ${GrantTypes.ImplicitPassword}, ${GrantTypes.AuthorizationCode}`,
     required: false,
   })
@@ -43,6 +46,7 @@ export class AccessTokenDto {
   public client_id: string | null = null;
 
   @ApiProperty({
+    type: String,
     description: `Required with grant_type ${GrantTypes.ImplicitPassword}, ${GrantTypes.AuthorizationCode}`,
     required: false,
   })
@@ -61,6 +65,7 @@ export class AccessTokenDto {
   public grant_type: GrantTypes;
 
   @ApiProperty({
+    type: String,
     required: false,
     description: `Required with grant_type ${GrantTypes.PKCE}`,
   })
@@ -70,6 +75,7 @@ export class AccessTokenDto {
   public code_verifier: string | null = null;
 
   @ApiProperty({
+    type: String,
     required: false,
     description: `Required with grant_type ${GrantTypes.PKCE}, ${GrantTypes.AuthorizationCode}`,
   })

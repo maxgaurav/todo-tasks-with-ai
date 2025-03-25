@@ -3,6 +3,8 @@ import { AccessTokenModel } from '../models/oauth/access-token.model';
 import { RefreshTokenModel } from '../models/oauth/refresh-token.model';
 import { ClientModel } from '../models/oauth/client.model';
 import { AuthorizationChallengeModel } from '../models/oauth/authorization-challenge.model';
+import { TaskModel } from '../models/task.model';
+import { TaskEmbeddingModel } from '../models/task-embedding.model';
 
 export const DefaultConnectionModels = [
   UserModel,
@@ -10,4 +12,6 @@ export const DefaultConnectionModels = [
   AccessTokenModel,
   RefreshTokenModel,
   AuthorizationChallengeModel,
+  TaskModel,
+  TaskEmbeddingModel,
 ];

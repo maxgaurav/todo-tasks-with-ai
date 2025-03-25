@@ -89,8 +89,12 @@ export class AuthService {
    * @param bearerToken
    */
   public async findUserByToken(bearerToken: string): Promise<UserModel | null> {
-    const decodedId: string =
-      await this.jwtService.verifyAsync<any>(bearerToken);
+    const decodedId: string = await this.jwtService.verifyAsync<any>(
+      bearerToken,
+      {
+        algorithms: ['HS256'],
+      },
+    );
 
     const accessToken =
       await this.accessTokenRepo.findForActiveState(decodedId);

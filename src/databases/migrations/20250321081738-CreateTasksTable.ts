@@ -11,21 +11,34 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-
-    await queryInterface.createTable('oauth_refresh_tokens', {
+    await queryInterface.createTable('tasks', {
       id: {
-        type: DataType.STRING(100),
+        type: DataType.BIGINT,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false,
       },
-      expires_at: {
+      title: {
+        type: DataType.STRING,
+        allowNull: false,
+      },
+      user_id: {
+        type: DataType.BIGINT,
+      },
+      content: {
+        type: DataType.TEXT,
+        allowNull: false,
+        defaultValue: '',
+      },
+      completed_on: {
         type: DataType.DATE,
         allowNull: true,
         defaultValue: null,
       },
-      access_token_id: {
-        type: DataType.STRING,
-        allowNull: false,
+      due_on: {
+        type: DataType.DATE,
+        allowNull: true,
+        defaultValue: null,
       },
       created_at: {
         type: DataType.DATE,
@@ -39,18 +52,18 @@ module.exports = {
       },
     });
 
-    await queryInterface.addConstraint('oauth_refresh_tokens', {
+    await queryInterface.addConstraint('tasks', {
       type: 'foreign key',
+      fields: ['user_id'],
       references: {
-        table: 'oauth_access_tokens',
+        table: 'users',
         field: 'id',
       },
-      fields: ['access_token_id'],
-      onDelete: 'CASCADE',
       onUpdate: 'NO ACTION',
+      onDelete: 'CASCADE',
     });
 
-    await queryInterface.addIndex('oauth_refresh_tokens', ['access_token_id']);
+    await queryInterface.addIndex('tasks', ['user_id']);
   },
 
   down: async (queryInterface: QueryInterface) => {
@@ -60,6 +73,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('oauth_refresh_tokens');
+
+    await queryInterface.dropTable('tasks');
   },
 };

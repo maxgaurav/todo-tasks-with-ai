@@ -27,17 +27,19 @@ export class AccessTokenGuard extends AuthGuard() implements CanActivate {
     ).pipe(
       map((user) => {
         if (!user) {
+          console.log('no user');
           throw new UnauthorizedException();
         }
         request.user = user;
         return true;
       }),
       catchError((err) =>
-        throwError(() =>
-          err instanceof jwt.JsonWebTokenError
+        throwError(() => {
+          console.dir(err);
+          return err instanceof jwt.JsonWebTokenError
             ? new UnauthorizedException()
-            : err,
-        ),
+            : err;
+        }),
       ),
     );
   }

@@ -15,7 +15,7 @@ export class MakeMigrationService {
   ) {}
 
   @Command({
-    command: 'migration:make',
+    command: 'migration:make <name>',
     describe: 'Generates migration stub',
   })
   public async generateStub(
