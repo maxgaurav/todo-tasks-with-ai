@@ -7,7 +7,7 @@ import { PromptManagerService } from '../../ollama/services/prompt-manager.servi
 import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
-function normalizeVector(vector: number[]): number[] {
+export function normalizeVector(vector: number[]): number[] {
   const norm = Math.sqrt(vector.reduce((sum, val) => sum + val ** 2, 0));
   return norm > 0 ? vector.map((val) => val / norm) : vector;
 }
